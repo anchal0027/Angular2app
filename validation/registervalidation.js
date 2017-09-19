@@ -16,8 +16,11 @@ module.exports = {
         else if (!(body.email.match(mailformat))) {
             callback("You have entered an invalid email address!", "");
 }
-		else if (!(body.password == body.cofirmpassword)) {
-            callback("You have entered passwords do not match !", "");
+		 else if (!(body.password == body.confirmpassword)) {
+            callback("passwords do not match !", "");
             }
-}
+            else{
+                 callback("", body);
+            }
+    }       
 }
