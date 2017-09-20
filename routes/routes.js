@@ -6,6 +6,7 @@ const validation = require('../validation/registervalidation');
 const jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 var app = express();
+
 router.get('/contacts', (req, res, next) => {
 	Contact.find((err, contacts) => {
 		res.json(contacts);
@@ -68,6 +69,7 @@ router.post('/register', (req, res, next) => {
 
 });
 router.post('/login', (req, res, next) => {
+
 	Register.findOne({
 		username: req.body.username
 	}, function (err, user) {
@@ -84,15 +86,15 @@ router.post('/login', (req, res, next) => {
 			if (bcrypt.compareSync(req.body.password, user.password)) {
 				// if user is found and password is right
 				// create a token
-				// var token = jwt.sign(user, app.get('superSecret'), {
-				//   expiresInMinutes: 1440 // expires in 24 hours
-				// });
-
+				 var token=jwt.sign({
+  				exp: Math.floor(Date.now() / 1000) + (60 * 60),
+  				data: 'user'
+				}, 'anchal');
 				// return the information including token as JSON
 				res.json({
 					success: true,
 					message: 'Login Success!',
-					// token: token
+					 token: token
 				});
 
 			} else {
